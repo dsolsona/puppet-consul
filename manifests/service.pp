@@ -54,6 +54,8 @@ define consul::service(
     'token'   => $token,
   }
 
+  notify{"basic_hash ${basic_hash}": }
+
   $service_hash = {
     service => delete_undef_values($basic_hash)
   }
