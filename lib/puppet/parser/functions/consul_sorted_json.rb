@@ -25,7 +25,7 @@ module JSON
           return "{" << ret.join(",") << "}";
         else
           obj.inspect
-          raise Exception.new("Unable to handle object of type <%s>" % obj.class.to_s)
+          raise Exception.new("Unable to handle object of type <%s> (info: %s)" % obj.class.to_s, obj)
       end
     end
 
