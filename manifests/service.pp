@@ -64,12 +64,12 @@ define consul::service(
   notify{"pretty_config: ${consul::pretty_config}":}
   notify{"pretty_config_indent: ${consul::pretty_config_indent}":}
 
-  fail('lol failing')
+  fail("basic_hash:${basic_hash} service_hash:${service_hash} pretty_config:${consul::pretty_config} pretty_config_indent:${consul::pretty_config_indent}")
 
-  $escaped_id = regsubst($id,'\/','_','G')
-  file { "${consul::config_dir}/service_${escaped_id}.json":
-    ensure  => $ensure,
-    content => consul_sorted_json($service_hash, $consul::pretty_config, $consul::pretty_config_indent),
-    require => File[$consul::config_dir],
-  } ~> Class['consul::reload_service']
+  # $escaped_id = regsubst($id,'\/','_','G')
+  # file { "${consul::config_dir}/service_${escaped_id}.json":
+  #   ensure  => $ensure,
+  #   content => consul_sorted_json($service_hash, $consul::pretty_config, $consul::pretty_config_indent),
+  #   require => File[$consul::config_dir],
+  # } ~> Class['consul::reload_service']
 }
