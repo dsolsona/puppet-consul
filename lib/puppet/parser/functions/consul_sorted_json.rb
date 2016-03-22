@@ -24,8 +24,7 @@ module JSON
           end
           return "{" << ret.join(",") << "}";
         else
-          obj.inspect
-          raise Exception.new("Unable to handle object of type <%s>" % obj.class.to_s)
+          raise Exception.new("Unable to handle object of type #{obj.class.to_s} (#{obj})")
       end
     end
 
@@ -152,6 +151,8 @@ Optionally you can pass 2 additional parameters, pretty generate and indent leng
     indent_len    = args[2].to_i || 4
 
     unsorted_hash.reject! {|key, value| value == :undef }
+
+    raise Exception.new("unsorted_hash: #{unsorted_hash}")
 
     if pretty
       return JSON.sorted_pretty_generate(unsorted_hash, indent_len) << "\n"

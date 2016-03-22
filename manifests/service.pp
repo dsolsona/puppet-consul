@@ -54,22 +54,17 @@ define consul::service(
     'token'   => $token,
   }
 
-  notify{"basic_hash ${basic_hash}": }
-
   $service_hash = {
     service => delete_undef_values($basic_hash)
   }
 
-  notify{"service_hash: ${service_hash}": }
-  notify{"pretty_config: ${consul::pretty_config}":}
-  notify{"pretty_config_indent: ${consul::pretty_config_indent}":}
 
-  fail("basic_hash:${basic_hash} service_hash:${service_hash} pretty_config:${consul::pretty_config} pretty_config_indent:${consul::pretty_config_indent}")
+  # fail("basic_hash:${basic_hash} service_hash:${service_hash} pretty_config:${consul::pretty_config} pretty_config_indent:${consul::pretty_config_indent}")
 
-  # $escaped_id = regsubst($id,'\/','_','G')
-  # file { "${consul::config_dir}/service_${escaped_id}.json":
-  #   ensure  => $ensure,
-  #   content => consul_sorted_json($service_hash, $consul::pretty_config, $consul::pretty_config_indent),
-  #   require => File[$consul::config_dir],
-  # } ~> Class['consul::reload_service']
+  $escaped_id = regsubst($id,'\/','_','G')
+  file { "${consul::config_dir}/service_${escaped_id}.json":
+    ensure  => $ensure,
+    content => consul_sorted_json($service_hash, $consul::pretty_config, $consul::pretty_config_indent),
+    require => File[$consul::config_dir],
+  } ~> Class['consul::reload_service']
 }
