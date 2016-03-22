@@ -5,6 +5,8 @@ module JSON
     @@loop = 0
 
     def sorted_generate(obj)
+      raise Exception.new("obj:#{obj}")
+
       case obj
         when Fixnum, Float, TrueClass, FalseClass, NilClass
           return obj.to_json
@@ -151,8 +153,6 @@ Optionally you can pass 2 additional parameters, pretty generate and indent leng
     indent_len    = args[2].to_i || 4
 
     unsorted_hash.reject! {|key, value| value == :undef }
-
-    raise Exception.new("unsorted_hash: #{unsorted_hash}")
 
     if pretty
       return JSON.sorted_pretty_generate(unsorted_hash, indent_len) << "\n"
