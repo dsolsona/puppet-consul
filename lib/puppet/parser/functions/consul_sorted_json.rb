@@ -5,7 +5,6 @@ module JSON
     @@loop = 0
 
     def sorted_generate(obj)
-      raise Exception.new("obj:#{obj}")
 
       case obj
         when Fixnum, Float, TrueClass, FalseClass, NilClass
