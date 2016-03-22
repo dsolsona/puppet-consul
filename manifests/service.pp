@@ -58,12 +58,12 @@ define consul::service(
     service => delete_undef_values($basic_hash)
   }
 
-  notify{"service_hash:$service_hash": }
-  notify{"pretty_config: $consul::pretty_config":}
-  notify{"pretty_config_indent:$consul::pretty_config_indent":}
+  notify{"service_hash: ${service_hash}": }
+  notify{"pretty_config: ${consul::pretty_config}":}
+  notify{"pretty_config_indent: ${consul::pretty_config_indent}":}
 
   fail('lol failing')
-  
+
   $escaped_id = regsubst($id,'\/','_','G')
   file { "${consul::config_dir}/service_${escaped_id}.json":
     ensure  => $ensure,
